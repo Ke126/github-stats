@@ -3,7 +3,7 @@ package stats
 import (
 	"time"
 
-	"github.com/Ke126/gh-stats/internal/github"
+	"github.com/Ke126/github-stats/internal/github"
 )
 
 type GitHubStats struct {

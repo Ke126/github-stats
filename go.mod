@@ -1,4 +1,4 @@
-module github.com/Ke126/gh-stats
+module github.com/Ke126/github-stats
 
 go 1.23.1
 

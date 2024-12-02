@@ -5,8 +5,8 @@ import (
 	"html/template"
 	"os"
 
-	"github.com/Ke126/gh-stats/internal/github"
-	"github.com/Ke126/gh-stats/internal/stats"
+	"github.com/Ke126/github-stats/internal/github"
+	"github.com/Ke126/github-stats/internal/stats"
 )
 
 func main() {
