@@ -2,7 +2,11 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"os"
+
+	"github.com/Ke126/gh-stats/internal/github"
+	"github.com/Ke126/gh-stats/internal/stats"
 )
 
 func main() {
@@ -11,21 +15,22 @@ func main() {
 		panic("GH_TOKEN is missing or unset")
 	}
 
-	client := &GitHubClient{token}
+	ghClient := &github.GitHubClient{Token: token}
+	ghStats := &stats.GitHubStats{Client: ghClient}
 
-	stats, err := client.GetStats()
+	stats, err := ghStats.AllStats()
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Println(stats)
 
-	svgCompiler, err := NewSVGCompiler("card.svg")
+	template, err := template.New("card.svg").ParseFiles("card.svg")
 	if err != nil {
 		panic(err)
 	}
 
-	err = svgCompiler.Compile(os.Stdout, stats)
+	err = template.Execute(os.Stdout, stats)
 	if err != nil {
 		panic(err)
 	}
