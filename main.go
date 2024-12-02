@@ -25,7 +25,7 @@ func main() {
 
 	fmt.Println(stats)
 
-	template, err := template.New("card.svg").ParseFiles("card.svg")
+	template, err := template.New("template.svg").ParseFiles("template.svg")
 	if err != nil {
 		panic(err)
 	}
