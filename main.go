@@ -25,12 +25,20 @@ func main() {
 
 	fmt.Println(stats)
 
-	template, err := template.New("template.svg").ParseFiles("template.svg")
+	err = os.MkdirAll("_site", 0750)
 	if err != nil {
 		panic(err)
 	}
 
-	err = template.Execute(os.Stdout, stats)
+	f, err := os.Create("_site/card.svg")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	template := template.Must(template.New("template.svg").ParseFiles("template.svg"))
+
+	err = template.Execute(f, stats)
 	if err != nil {
 		panic(err)
 	}
