@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func Top5Languages(langBytes map[string]int, langColors map[string]string) []Language {
+func TopNLanguages(n int, langBytes map[string]int, langColors map[string]string) []Language {
 	totalBytes := 0
 	i := 0
 
@@ -28,10 +28,10 @@ func Top5Languages(langBytes map[string]int, langColors map[string]string) []Lan
 		return s[i].v > s[j].v
 	})
 
-	// pick up to the top 5 languages, calculate their percentages, get their colors
+	// pick up to the top n languages, calculate their percentages, get their colors
 	// and add to a slice
 	out := make([]Language, 0, 5)
-	for i := 0; i < len(s) && i < 5; i++ {
+	for i := 0; i < len(s) && i < n; i++ {
 		lang := Language{
 			Language: s[i].k,
 			Percent:  fmt.Sprintf("%.1f", 100*float64(s[i].v)/float64(totalBytes)),

@@ -87,7 +87,7 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 	delete(langs, "ShaderLab")        // remove ShaderLab from entries
 	langs["JavaScript"] -= 3 * 612000 // remove 3 * 612kb of static JavaScript files
 
-	top5 := Top5Languages(langs, colors)
+	top5 := TopNLanguages(5, langs, colors)
 
 	return Stats{
 		Username: userInfo.Username,
