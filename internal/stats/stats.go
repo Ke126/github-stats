@@ -25,7 +25,7 @@ type Stats struct {
 	Contributions int
 	Repositories  int
 
-	Top5 []Language
+	Top3 []Language
 }
 
 type Language struct {
@@ -83,11 +83,11 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 		return Stats{}, err
 	}
 
-	// manual corrections before getting top 5 languages
+	// manual corrections before getting top 3 languages
 	delete(langs, "ShaderLab")        // remove ShaderLab from entries
 	langs["JavaScript"] -= 3 * 612000 // remove 3 * 612kb of static JavaScript files
 
-	top5 := TopNLanguages(5, langs, colors)
+	top3 := TopNLanguages(3, langs, colors)
 
 	return Stats{
 		Username: userInfo.Username,
@@ -97,6 +97,6 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 		Contributions: contributions,
 		Repositories:  len(repos),
 
-		Top5: top5,
+		Top3: top3,
 	}, nil
 }
