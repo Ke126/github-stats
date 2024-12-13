@@ -1,0 +1,42 @@
+name: update-card
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # daily at midnight
+  workflow_dispatch:
+
+jobs:
+  update-card:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+      - name: Install dependencies
+        run: go get .
+      - name: Create card.svg
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: go run .
+      - name: Set Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Stage and check for changes
+        id: check-changes
+        run: |
+          git add card.svg
+          if git diff --staged --quiet; then
+            echo "no changes"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "changed"
+          fi
+      - name: Commit updated card.svg to repo
+        if: ${{ steps.check-changes.outputs.changed == 'true' }}
+        run: |
+          git commit -m "update card.svg"
+          git push
