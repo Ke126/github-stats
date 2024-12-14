@@ -30,12 +30,12 @@ type Repository struct {
 
 // GetRepos uses the /user/repos endpoint to retrieve a slice
 // of all repos the user has read access to. Each repo has a name
-// in the format "user/repo_name" and a number of stars.
+// in the format "{owner}/repo_name" and a number of stars.
 func (g *GitHubClient) GetRepos() ([]Repository, error) {
 	return get[[]Repository](g.Token, "/user/repos")
 }
 
-// GetLanguages uses the /repos/{user}/{repo}/languages endpoint
+// GetLanguages uses the /repos/{owner}/{repo}/languages endpoint
 // to retrieve a map of all languages and number of bytes used in that repository.
 func (g *GitHubClient) GetLanguages(repoName string) (map[string]int, error) {
 	return get[map[string]int](g.Token, "/repos/"+repoName+"/languages")
