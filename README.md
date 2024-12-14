@@ -1,5 +1,7 @@
 # GitHub Stats
 
+[![update-card](https://github.com/ke126/github-stats/actions/workflows/update-card.yaml/badge.svg)](https://github.com/ke126/github-stats/actions/workflows/update-card.yaml)
+
 ![card](card.svg)
 
 GitHub Stats is a project which automatically generates a simple card displaying some useful stats from your GitHub account in Scalable Vector Graphics (SVG) format. This card can be viewed in any browser or linked in any of your repositories' READMEs.
