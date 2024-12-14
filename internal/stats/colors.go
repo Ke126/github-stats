@@ -30,7 +30,7 @@ func LanguageColors() (map[string]string, error) {
 	}
 
 	// transform from map[string]struct{...} to map[string]string
-	colors := make(map[string]string)
+	colors := make(map[string]string, len(temp))
 	for k, v := range temp {
 		colors[k] = v.Color
 	}

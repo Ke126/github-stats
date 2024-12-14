@@ -30,7 +30,7 @@ func TopNLanguages(n int, langBytes map[string]int, langColors map[string]string
 
 	// pick up to the top n languages, calculate their percentages, get their colors
 	// and add to a slice
-	out := make([]Language, 0, 5)
+	out := make([]Language, 0, n)
 	for i := 0; i < len(s) && i < n; i++ {
 		lang := Language{
 			Language: s[i].k,
