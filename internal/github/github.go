@@ -3,6 +3,8 @@ package github
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/Ke126/github-stats/internal/response"
 )
 
 const GITHUB_API = "https://api.github.com"
@@ -56,6 +58,10 @@ func (g *GitHubClient) GetContributions(year int) (int, error) {
 	}
 	defer res.Body.Close()
 
+	if !response.Ok(res.StatusCode) {
+		return 0, response.StatusError{StatusCode: res.StatusCode}
+	}
+
 	contributions, err := ParseGraphQLResponse(res)
 	if err != nil {
 		return 0, err
@@ -77,6 +83,10 @@ func get[T any](token string, path string) (T, error) {
 		return out, err
 	}
 	defer res.Body.Close()
+
+	if !response.Ok(res.StatusCode) {
+		return out, response.StatusError{StatusCode: res.StatusCode}
+	}
 
 	err = json.NewDecoder(res.Body).Decode(&out)
 	if err != nil {

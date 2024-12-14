@@ -4,6 +4,8 @@ import (
 	"encoding/base64"
 	"io"
 	"net/http"
+
+	"github.com/Ke126/github-stats/internal/response"
 )
 
 // Base64Avatar retrieves the base64 string encoding
@@ -14,6 +16,10 @@ func Base64Avatar(avatarUrl string) (string, error) {
 		return "", err
 	}
 	defer res.Body.Close()
+
+	if !response.Ok(res.StatusCode) {
+		return "", response.StatusError{StatusCode: res.StatusCode}
+	}
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {

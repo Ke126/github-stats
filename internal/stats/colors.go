@@ -3,6 +3,7 @@ package stats
 import (
 	"net/http"
 
+	"github.com/Ke126/github-stats/internal/response"
 	"gopkg.in/yaml.v3"
 )
 
@@ -15,6 +16,10 @@ func LanguageColors() (map[string]string, error) {
 		return nil, err
 	}
 	defer res.Body.Close()
+
+	if !response.Ok(res.StatusCode) {
+		return nil, response.StatusError{StatusCode: res.StatusCode}
+	}
 
 	var temp map[string]struct {
 		Color string `yaml:"color"`
