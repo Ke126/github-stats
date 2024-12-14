@@ -83,10 +83,6 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 		return Stats{}, err
 	}
 
-	// manual corrections before getting top 3 languages
-	delete(langs, "ShaderLab")        // remove ShaderLab from entries
-	langs["JavaScript"] -= 3 * 612000 // remove 3 * 612kb of static JavaScript files
-
 	top3 := TopNLanguages(3, langs, colors)
 
 	return Stats{
