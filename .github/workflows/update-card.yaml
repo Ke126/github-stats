@@ -5,6 +5,9 @@ on:
     - cron: '0 0 * * *' # daily at midnight
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update-card:
     runs-on: ubuntu-latest
@@ -21,10 +24,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: go run .
-      - name: Set Git identity
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Stage and check for changes
         id: check-changes
         run: |
@@ -32,11 +31,13 @@ jobs:
           if git diff --staged --quiet; then
             echo "no changes"
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
             echo "changed"
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
       - name: Commit updated card.svg to repo
         if: ${{ steps.check-changes.outputs.changed == 'true' }}
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "update card.svg"
           git push
