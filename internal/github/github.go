@@ -46,7 +46,7 @@ func (g *GitHubClient) GetLanguages(repoName string) (map[string]int, error) {
 // GetContributions uses the /graphql endpoint to retrieve the
 // total number of contributions made by the user in that year.
 func (g *GitHubClient) GetContributions(year int) (int, error) {
-	req, err := http.NewRequest(http.MethodPost, GITHUB_API+"/graphql", MakeGraphQLRequest(year))
+	req, err := http.NewRequest(http.MethodPost, GITHUB_API+"/graphql", makeGraphQLRequestBody(year))
 	if err != nil {
 		return 0, err
 	}
@@ -62,7 +62,7 @@ func (g *GitHubClient) GetContributions(year int) (int, error) {
 		return 0, response.StatusError{StatusCode: res.StatusCode}
 	}
 
-	contributions, err := ParseGraphQLResponse(res)
+	contributions, err := parseGraphQLResponse(res)
 	if err != nil {
 		return 0, err
 	}

@@ -5,7 +5,7 @@ import (
 	"sort"
 )
 
-func TopNLanguages(n int, langBytes map[string]int, langColors map[string]string) []Language {
+func topNLanguages(n int, langBytes map[string]int, langColors map[string]string) []Language {
 	totalBytes := 0
 	i := 0
 
