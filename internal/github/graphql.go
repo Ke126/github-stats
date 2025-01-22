@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func MakeGraphQLRequest(year int) *bytes.Reader {
-	graphql := `{ "query": "query { viewer { contributionsCollection(to: \"%d-12-31T23:59:59\") { contributionCalendar { totalContributions } } } }" }`
+func makeGraphQLRequestBody(year int) *bytes.Reader {
+	const graphql = `{ "query": "query { viewer { contributionsCollection(to: \"%d-12-31T23:59:59\") { contributionCalendar { totalContributions } } } }" }`
 	body := fmt.Sprintf(graphql, year)
 	return bytes.NewReader([]byte(body))
 }
@@ -25,7 +25,7 @@ type GraphQLResponse struct {
 	} `json:"data"`
 }
 
-func ParseGraphQLResponse(res *http.Response) (int, error) {
+func parseGraphQLResponse(res *http.Response) (int, error) {
 	var out GraphQLResponse
 	err := json.NewDecoder(res.Body).Decode(&out)
 	if err != nil {

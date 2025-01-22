@@ -40,7 +40,7 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 		return Stats{}, err
 	}
 
-	avatar, err := Base64Avatar(userInfo.Avatar)
+	avatar, err := base64Avatar(userInfo.Avatar)
 	if err != nil {
 		return Stats{}, err
 	}
@@ -78,12 +78,12 @@ func (s *GitHubStats) AllStats() (Stats, error) {
 		}
 		contributions += yearContributions
 	}
-	colors, err := LanguageColors()
+	colors, err := languageColors()
 	if err != nil {
 		return Stats{}, err
 	}
 
-	top3 := TopNLanguages(3, langs, colors)
+	top3 := topNLanguages(3, langs, colors)
 
 	return Stats{
 		Username: userInfo.Username,

@@ -8,17 +8,17 @@ import (
 	"github.com/Ke126/github-stats/internal/response"
 )
 
-// Base64Avatar retrieves the base64 string encoding
+// base64Avatar retrieves the base64 string encoding
 // of the user's avatar on GitHub.
-func Base64Avatar(avatarUrl string) (string, error) {
+func base64Avatar(avatarUrl string) (string, error) {
 	res, err := http.Get(avatarUrl)
 	if err != nil {
 		return "", err
 	}
 	defer res.Body.Close()
 
-	if !response.Ok(res.StatusCode) {
-		return "", response.StatusError{StatusCode: res.StatusCode}
+	if err = response.Ok(res.StatusCode); err != nil {
+		return "", err
 	}
 
 	body, err := io.ReadAll(res.Body)

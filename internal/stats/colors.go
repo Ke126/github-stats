@@ -7,18 +7,18 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-// LanguageColors retrieves the languages.yml file from
+// languageColors retrieves the languages.yml file from
 // https://github.com/github-linguist/linguist/blob/main/lib/linguist/languages.yml,
 // and parses the yaml into a map from languages to hex color strings.
-func LanguageColors() (map[string]string, error) {
+func languageColors() (map[string]string, error) {
 	res, err := http.Get("https://raw.githubusercontent.com/github-linguist/linguist/refs/heads/main/lib/linguist/languages.yml")
 	if err != nil {
 		return nil, err
 	}
 	defer res.Body.Close()
 
-	if !response.Ok(res.StatusCode) {
-		return nil, response.StatusError{StatusCode: res.StatusCode}
+	if err = response.Ok(res.StatusCode); err != nil {
+		return nil, err
 	}
 
 	var temp map[string]struct {
