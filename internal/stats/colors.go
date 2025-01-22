@@ -17,8 +17,8 @@ func languageColors() (map[string]string, error) {
 	}
 	defer res.Body.Close()
 
-	if !response.Ok(res.StatusCode) {
-		return nil, response.StatusError{StatusCode: res.StatusCode}
+	if err = response.Ok(res.StatusCode); err != nil {
+		return nil, err
 	}
 
 	var temp map[string]struct {

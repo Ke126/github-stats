@@ -2,12 +2,8 @@ package response
 
 import "strconv"
 
-type StatusError struct {
-	StatusCode int
-}
-
-var _ error = StatusError{}
+type StatusError int
 
 func (s StatusError) Error() string {
-	return "fetch failed with status code " + strconv.Itoa(s.StatusCode)
+	return "response: fetch failed with status code " + strconv.Itoa(int(s))
 }

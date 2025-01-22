@@ -17,8 +17,8 @@ func base64Avatar(avatarUrl string) (string, error) {
 	}
 	defer res.Body.Close()
 
-	if !response.Ok(res.StatusCode) {
-		return "", response.StatusError{StatusCode: res.StatusCode}
+	if err = response.Ok(res.StatusCode); err != nil {
+		return "", err
 	}
 
 	body, err := io.ReadAll(res.Body)
